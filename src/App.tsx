@@ -13,6 +13,12 @@ import { capitalizeFirstLetter } from "./lib/utils";
 import { ModalsProvider } from "./providers/modals";
 import { ThemeProvider } from "./providers/theme";
 import { type Voter } from "./types"; // Import types
+import { MarkdownDialog } from "./components/about-dialog";
+
+// This is how you import a raw text file in most modern build systems like Vite.
+// The ?raw suffix tells the bundler to load the file content as a string.
+// You would replace './README.md' with the correct path to your file.
+import readmeContent from "../README.md?raw";
 
 const App: React.FC = () => {
 	// Destructure the new state and setter functions
@@ -73,7 +79,7 @@ const App: React.FC = () => {
 					<div className="flex items-center justify-betweenpx-6 py-2 max-w-4xl mx-auto">
 						{!isDataLoaded ? (
 							<h2 className="text-xl font-bold text-gray-800 dark:text-white truncate">
-								Voters Searching System (VSS)
+								Voters Scanning System (VSS)
 							</h2>
 						) : (
 							<div className="flex flex-col">
@@ -125,6 +131,12 @@ const App: React.FC = () => {
 						<InitialData />
 					)}
 				</div>
+				{/* It will be rendered with the content from your README.md file */}
+				<MarkdownDialog
+					markdownContent={readmeContent}
+					buttonText="View README"
+					dialogTitle="Project Documentation"
+				/>
 			</div>
 			<ModalsProvider />
 		</ThemeProvider>

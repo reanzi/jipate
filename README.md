@@ -1,6 +1,6 @@
 # Voter Scanning System (VSS)
 
-This is a web-based application designed to manage and track voter information for a specific facility or election station. It provides tools for data management, searching, and marking voters as having cast their vote.
+This is a web-based application designed to manage and track voter information for a specific facility or election station. It provides tools for data management, searching, and marking voters for facility or station use.
 
 ### Key Features
 
@@ -16,8 +16,8 @@ This is a web-based application designed to manage and track voter information f
 
 ### Getting Started
 
-1.  **Select a Mode:** Choose between "Test" mode with generated data or "Drive" mode for a real facility with imported data.
+- **Select a Mode:** Choose between "Test" mode with generated data or "Drive" mode for a real facility with imported data.
 
-2.  **Load Data:** In "Drive" mode, upload a CSV file with your voter list. In "Test" mode, use the slider to generate mock data.
+- **Load Data:** In "Drive" mode, upload a CSV file with your voter list. In "Test" mode, use the slider to generate mock data.
 
-3.  **Search and Mark:** Use the search bar to find a voter. Once found, their status can be updated.
+- **Search and Mark:** Use the search bar to find a voter. Once found, their status can be updated.
