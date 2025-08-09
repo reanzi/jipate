@@ -106,16 +106,16 @@ const App: React.FC = () => {
 		<ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
 			<div className="min-w-screen min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-50 flex flex-col overflow-hidden">
 				<header className="sticky top-0 left-0 right-0 z-20 bg-white dark:bg-gray-800 shadow-lg">
-					<div className="flex items-center justify-betweenpx-6 py-2 max-w-4xl mx-auto">
+					<div className="flex items-center justify-betweenpx-6 p-2 max-w-4xl mx-auto">
 						{!isDataLoaded ? (
-							<h2 className="text-xl font-bold text-gray-800 dark:text-white truncate">
+							<h2 className="text-sm md:text-xl font-bold text-gray-800 dark:text-white truncate">
 								Voters Scanning System (VSS)
 							</h2>
 						) : (
 							<div className="flex flex-col">
 								<h2 className="text-2xl font-bold text-gray-800 dark:text-white truncate">
 									VSS
-									<span className="ml-2 text-md font-mono tracking-wide bg-blue-100 text-blue-700 dark:bg-blue-800/50 dark:text-blue-100 px-4 pt-[1.5px] pb-0.5 rounded-md">
+									<span className="hidden md:inline ml-2 md:text-md font-mono tracking-wide bg-blue-100 text-blue-700 dark:bg-blue-800/50 dark:text-blue-100 px-4 pt-[1.5px] pb-0.5 rounded-md">
 										{appState?.mode === "TEST"
 											? "Testing"
 											: capitalizeFirstLetter(
@@ -123,13 +123,20 @@ const App: React.FC = () => {
 											  )}
 									</span>
 								</h2>
+								<span className="md:hidden text-xs font-mono tracking-wide  text-blue-700  dark:text-blue-100 rounded-md leading-0">
+									{appState?.mode === "TEST"
+										? "Testing"
+										: capitalizeFirstLetter(
+												appState?.facility ?? "No facility",
+										  )}
+								</span>
 								{/* <p className="text-sm text-muted-foreground font-mono">
 									Counts: {filteredVoters.length}
 								</p> */}
 							</div>
 						)}
 						{isDataLoaded && (
-							<div className="relative flex flex-1 z-10 header px-6 py-2 max-w-4xl mx-auto">
+							<div className="relative flex flex-1 z-10 header pl-2 md:px-6 py-2 max-w-4xl mx-auto">
 								{/* <SearchBar
 									searchTerm={searchTerm}
 									onSearchChange={setSearchTerm}

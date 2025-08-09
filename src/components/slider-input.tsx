@@ -18,7 +18,6 @@ export function SliderInput({ className, ...props }: SliderInputProps) {
 	const handleValueChange = props.onValueChange || setLocalValue;
 
 	// Format the number with commas for better readability
-	const formattedValue = new Intl.NumberFormat().format(currentValue[0]);
 
 	return (
 		<>
@@ -29,7 +28,7 @@ export function SliderInput({ className, ...props }: SliderInputProps) {
 				step={100}
 				min={500}
 				className={cn(
-					"w-[60%] relative",
+					"w-full relative",
 					// Use highly specific selectors to override shadcn/ui's default styling.
 					// This targets the specific `div`s that make up the track, range, and thumb.
 					"[&>span]:bg-blue-200 dark:[&>span]:bg-blue-900", // Styles the track background
@@ -39,9 +38,6 @@ export function SliderInput({ className, ...props }: SliderInputProps) {
 				)}
 				{...props}
 			/>
-			<span className="absolute bottom-2 left-[25%] text-center text-blue-600 dark:text-blue-300 font-semibold">
-				Default mount: {formattedValue}
-			</span>
 		</>
 	);
 }

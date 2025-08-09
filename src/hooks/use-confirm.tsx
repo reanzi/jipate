@@ -46,17 +46,17 @@ export const useConfirm = (
 						{message}
 					</DialogDescription>
 				</DialogHeader>
-				<DialogFooter className="pt-2 flex space-x-4">
+				<DialogFooter className="pt-2 flex flex-row space-x-4">
 					<Button
 						variant={"outline"}
 						onClick={handleCancel}
-						className="border-neutral-500/40"
+						className="border-neutral-500/40 w-1/6"
 					>
 						Cancel
 					</Button>
 					<Button
 						onClick={handleConfirm}
-						className="text-white bg-red-500 hover:bg-red-500 dark:bg-red-600 w-2/5 hover:text-white"
+						className="ml-auto text-white bg-red-500 hover:bg-red-500 dark:bg-red-600 w-4/6  hover:text-white"
 					>
 						Continue
 					</Button>

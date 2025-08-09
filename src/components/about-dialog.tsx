@@ -95,7 +95,7 @@ export const MarkdownDialog: React.FC<MarkdownDialogProps> = ({
 		<>
 			{/* Trigger Button */}
 			<motion.button
-				className="fixed bottom-4 right-4 z-50 p-4 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+				className="fixed bottom-4 right-4 z-50 p-2 md:p-4 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
 				whileHover={{ scale: 1.05 }}
 				whileTap={{ scale: 0.95 }}
 				onClick={() => setIsOpen(true)}
@@ -118,7 +118,7 @@ export const MarkdownDialog: React.FC<MarkdownDialogProps> = ({
 							animate={{ scale: 1, opacity: 1, y: 0 }}
 							exit={{ scale: 0.9, opacity: 0, y: -50 }}
 							transition={{ type: "spring", stiffness: 260, damping: 20 }}
-							className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 md:p-8 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-50 rounded-xl shadow-2xl m-4"
+							className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto p-2 md:p-8 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-50 rounded-xl shadow-2xl m-4"
 						>
 							{/* Close button */}
 							<button

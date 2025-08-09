@@ -144,7 +144,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
 					onFocus={handleFocus}
 					onBlur={handleBlur}
 					placeholder={placeholder}
-					className="w-full pl-10 pr-10 py-2.5 text-sm rounded-xl bg-gray-100 border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+					className="w-full pl-10 pr-10 py-2 text-sm rounded-xl bg-gray-100 border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
 				/>
 				<AnimatePresence>
 					{inputValue && (
