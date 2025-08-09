@@ -153,7 +153,7 @@ const App: React.FC = () => {
 					</div>
 				</header>
 
-				<div className="flex-1 w-full  xpt-[180px] max-w-4xl mx-auto p-1 bg-neutral-100 dark:bg-neutral-900">
+				<div className="flex-1 w-full  xpt-[180px] max-w-4xl mx-auto p-1 ">
 					{appState && appState.data.length > 0 ? (
 						<>
 							<AnimatePresence>
