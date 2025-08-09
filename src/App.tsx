@@ -17,8 +17,8 @@ import { ThemeProvider } from "./providers/theme";
 // This is how you import a raw text file in most modern build systems like Vite.
 // The ?raw suffix tells the bundler to load the file content as a string.
 // You would replace './README.md' with the correct path to your file.
-import readmeContent from "../README.md?raw";
 import { Toaster } from "sonner";
+import readmeContent from "../README.md?raw";
 
 const App: React.FC = () => {
 	// Destructure the new state and setter functions
