@@ -107,7 +107,7 @@ const App: React.FC = () => {
 		<ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
 			<div className="min-w-screen min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-50 flex flex-col overflow-hidden">
 				<header className="sticky top-0 left-0 right-0 z-20 bg-white dark:bg-gray-800 shadow-lg">
-					<div className="flex items-center justify-betweenpx-6 p-2 max-w-4xl mx-auto">
+					<div className="flex items-center justify-betweenpx-6 pl-2 py-2 max-w-4xl mx-auto">
 						{!isDataLoaded ? (
 							<h2 className="text-sm md:text-xl font-bold text-gray-800 dark:text-white truncate">
 								Voters Scanning System (VSS)
@@ -138,12 +138,6 @@ const App: React.FC = () => {
 						)}
 						{isDataLoaded && (
 							<div className="relative flex flex-1 z-10 header pl-2 md:px-6 py-2 max-w-4xl mx-auto">
-								{/* <SearchBar
-									searchTerm={searchTerm}
-									onSearchChange={setSearchTerm}
-									voters={voters}
-									placeholder="Search..."
-								/> */}
 								<SearchBar
 									isFiltering={isFiltering}
 									onSelectSuggestion={setSearchTerm}
