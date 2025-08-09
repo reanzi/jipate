@@ -140,6 +140,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
 					onChange={(e) => {
 						setInputValue(e.target.value);
 						setShowSuggestions(true);
+						if (e.target.value === "") {
+							handleClear();
+						}
 					}}
 					onFocus={handleFocus}
 					onBlur={handleBlur}

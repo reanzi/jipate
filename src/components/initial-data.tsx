@@ -6,6 +6,7 @@ import { Button } from "./ui/button";
 import { SliderInput } from "@/components/slider-input";
 import { generateData, transformData } from "@/utils/generate-data";
 import { Loader2Icon } from "lucide-react"; // Import a loading icon
+import { toast } from "sonner";
 
 export const InitialData = () => {
 	// Get the state setter from the Zustand store
@@ -19,25 +20,43 @@ export const InitialData = () => {
 	// Handle file upload and parsing
 	const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];
-		if (file) {
-			Papa.parse(file, {
-				header: true,
-				complete: (results) => {
-					// Cast results data to the Voter array type
-					const parsedData = transformData(results.data);
-					// Set the app state with the parsed data in "DRIVE" mode
-					console.log("UPLOADED DATA: ", JSON.stringify(parsedData, null, 2));
-					setAppState({
-						mode: "DRIVE",
-						data: parsedData,
-						facility: facilityName,
-					});
-				},
-				error: (error) => {
-					console.error("Error parsing file:", error);
+		if (!facilityName) {
+			toast("Missing field", {
+				description: "Please provide your facility's name.",
+				action: {
+					label: "Undo",
+					onClick: () => console.log("Undo"),
 				},
 			});
+			return;
 		}
+		if (!file) {
+			toast("Missing field", {
+				description: "Please provide your facility's name.",
+				action: {
+					label: "Undo",
+					onClick: () => console.log("Undo"),
+				},
+			});
+			return;
+		}
+		Papa.parse(file, {
+			header: true,
+			complete: (results) => {
+				// Cast results data to the Voter array type
+				const parsedData = transformData(results.data);
+				// Set the app state with the parsed data in "DRIVE" mode
+				console.log("UPLOADED DATA: ", JSON.stringify(parsedData, null, 2));
+				setAppState({
+					mode: "DRIVE",
+					data: parsedData,
+					facility: facilityName,
+				});
+			},
+			error: (error) => {
+				console.error("Error parsing file:", error);
+			},
+		});
 	};
 
 	// Optimized function to handle generating mock data

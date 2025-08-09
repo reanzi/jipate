@@ -90,7 +90,7 @@ const Row = ({
 
 const List: React.FC<VoterListProps> = ({ voters }) => {
 	const windowSize = useWindowSize();
-	const headerHeight = 180; // This value is derived from the pt-[180px] on the main content div in App.tsx
+	const headerHeight = 168; // This value is derived from the pt-[180px] on the main content div in App.tsx
 	const rowHeight = 50;
 	const containerHeight =
 		windowSize.height > headerHeight ? windowSize.height - headerHeight : 0;

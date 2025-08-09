@@ -22,4 +22,6 @@ This is a web-based application designed to manage and track voter information f
 
 - **Load Data:** In "Drive" mode, upload a CSV file with your voter list. In "Test" mode, use the slider to generate mock data.
 
-- **Search and Mark:** Use the search bar to find a voter. Once found, their status can be updated.
+- **Search and Mark:** Use the search bar to find a voter and their status can be updated as fit.
+
+` Remember Using 'Generate record button' implies TEST - mode While Uploading your data file implies  DRIVE - Mode`

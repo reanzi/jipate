@@ -18,6 +18,7 @@ import { ThemeProvider } from "./providers/theme";
 // The ?raw suffix tells the bundler to load the file content as a string.
 // You would replace './README.md' with the correct path to your file.
 import readmeContent from "../README.md?raw";
+import { Toaster } from "sonner";
 
 const App: React.FC = () => {
 	// Destructure the new state and setter functions
@@ -151,21 +152,21 @@ const App: React.FC = () => {
 								/>
 							</div>
 						)}
-						<div className="ml-auto flex items-center gap-2">
+						<div className="ml-auto flex items-center">
 							{isDataLoaded && <SettingMenu />}
 							<ThemeToggle />
 						</div>
 					</div>
 				</header>
 
-				<div className="flex-1 w-full  xpt-[180px] max-w-4xl mx-auto p-2 bg-neutral-100 dark:bg-neutral-900">
+				<div className="flex-1 w-full  xpt-[180px] max-w-4xl mx-auto p-1 bg-neutral-100 dark:bg-neutral-900">
 					{appState && appState.data.length > 0 ? (
 						<>
 							<AnimatePresence>
 								<List voters={filteredVoters} onMarkUsed={() => {}} />
 							</AnimatePresence>
 							{filteredVoters.length > 0 && (
-								<div className="text-start  pl-3 py-1.5 text-sm text-neutral-200 dark:text-neutral-800 font-mono bg-gray-700 dark:bg-gray-200 rounded-b-lg">
+								<div className="text-start  pl-3 py-1.5 text-sm dark:text-neutral-50 text-neutral-800 font-mono dark:bg-gray-800 bg-neutral-200 rounded-b-lg">
 									Found {new Intl.NumberFormat().format(filteredVoters.length)}{" "}
 									records
 								</div>
@@ -182,6 +183,7 @@ const App: React.FC = () => {
 					dialogTitle="Project Documentation"
 				/>
 			</div>
+			<Toaster richColors />
 			<ModalsProvider />
 		</ThemeProvider>
 	);

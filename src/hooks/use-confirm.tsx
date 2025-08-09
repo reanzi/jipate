@@ -39,10 +39,10 @@ export const useConfirm = (
 		<Dialog open={promise !== null} onOpenChange={handleClose}>
 			<DialogContent className="bg-blue-50 dark:bg-neutral-800 rounded-lg border border-red-500/70 dark:border-red-500/30 shadow-2xl shadow-red-500/50 dark:shadow-red-500/30">
 				<DialogHeader className="pt-2 pb-4">
-					<DialogTitle className="text-2xl font-bold text-neutral-700 dark:text-neutral-200 mb-4">
+					<DialogTitle className="text-start ext-2xl font-bold text-neutral-700 dark:text-neutral-200 mb-4">
 						{title}
 					</DialogTitle>
-					<DialogDescription className="text-neutral-500 dark:text-neutral-400 font-semibold">
+					<DialogDescription className="text-start text-neutral-500 dark:text-neutral-400 font-semibold">
 						{message}
 					</DialogDescription>
 				</DialogHeader>
@@ -50,7 +50,7 @@ export const useConfirm = (
 					<Button
 						variant={"outline"}
 						onClick={handleCancel}
-						className="border-neutral-500/40 w-1/6"
+						className="border-neutral-500/40 max-w-2/6"
 					>
 						Cancel
 					</Button>
