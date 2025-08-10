@@ -22,3 +22,6 @@ export interface AppState {
     facility?: string;
     data: Voter[]
 }
+
+
+export type Role = 'voter' | 'agent' | 'contender' | 'sponsor'

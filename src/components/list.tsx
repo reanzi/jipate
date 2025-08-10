@@ -131,7 +131,7 @@ const List: React.FC<VoterListProps> = ({ voters }) => {
 							scope="col"
 							className="hidden sm:table-cell py-3 px-6 w-[20%] text-center"
 						>
-							Used
+							Role
 						</th>
 					</tr>
 				</thead>

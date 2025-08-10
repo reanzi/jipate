@@ -17,7 +17,8 @@ import { ThemeProvider } from "./providers/theme";
 // This is how you import a raw text file in most modern build systems like Vite.
 // The ?raw suffix tells the bundler to load the file content as a string.
 // You would replace './README.md' with the correct path to your file.
-import { Toaster } from "sonner";
+import { SlidersIcon } from "lucide-react";
+import { toast, Toaster } from "sonner";
 import readmeContent from "../README.md?raw";
 
 const App: React.FC = () => {
@@ -147,7 +148,20 @@ const App: React.FC = () => {
 							</div>
 						)}
 						<div className="ml-auto flex items-center">
-							{isDataLoaded && <SettingMenu />}
+							{isDataLoaded && (
+								<>
+									<SlidersIcon
+										size={18}
+										className="pr-0.5 cursor-pointer"
+										onClick={() =>
+											toast("Filter actions", {
+												description: "This action will come soon.",
+											})
+										}
+									/>
+									<SettingMenu />
+								</>
+							)}
 							<ThemeToggle />
 						</div>
 					</div>
