@@ -7,7 +7,7 @@ export interface Voter {
     name: string;
     cardNumber: string;
     station: string;
-    imageUrl: string;
+    dob: string;
     isAgent: boolean;
     isReferee: boolean;
     designation?: string; // can be station or voter's name

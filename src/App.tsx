@@ -69,34 +69,19 @@ const App: React.FC = () => {
 			return voters;
 		}
 
+		const upperCaseInputValue = deferredSearchTerm.toUpperCase().trim();
 		// Filter the list based on the deferred search term
-		return voters.filter(
-			(voter) =>
-				voter.name
-					.toLowerCase()
-					.includes(deferredSearchTerm.toLowerCase().trim()) ||
-				voter.cardNumber
-					.toLowerCase()
-					.includes(deferredSearchTerm.toLowerCase().trim()) ||
-				voter.station
-					.toLowerCase()
-					.includes(deferredSearchTerm.toLowerCase().trim()),
-		);
+		return voters.filter((voter) => {
+			const name = voter.name || "";
+			const cardNumber = voter.cardNumber || "";
+			const station = voter.station || "";
+			return (
+				name.includes(upperCaseInputValue) ||
+				cardNumber.includes(upperCaseInputValue) ||
+				station.includes(upperCaseInputValue)
+			);
+		});
 	}, [voters, deferredSearchTerm]);
-	// // Filter the voters based on the search term
-	// const filteredVoters = useMemo(() => {
-	// 	if (!appState || !appState.data) {
-	// 		return [];
-	// 	}
-
-	// 	console.log("LOADED DATA: ", JSON.stringify(appState.data, null, 2));
-	// 	const lowercasedSearchTerm = searchTerm.toLowerCase();
-	// 	return appState.data.filter(
-	// 		(voter: Voter) =>
-	// 			voter.name.toLowerCase().includes(lowercasedSearchTerm) ||
-	// 			voter.cardNumber.toLowerCase().includes(lowercasedSearchTerm),
-	// 	);
-	// }, [appState, searchTerm]);
 
 	if (isInitializing) {
 		return <LoadingUI />;

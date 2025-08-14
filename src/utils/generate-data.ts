@@ -21,15 +21,13 @@ export function generateData(amount: number = 500): Voter[] {
         // Assign a random station
         const station = stations[Math.floor(Math.random() * stations.length)];
 
-        // Generate a placeholder image URL based on initials and index
-        const initials = name.split(' ').map(n => n.charAt(0)).join('');
-        const imageUrl = `https://placehold.co/150x150/E0E0E0/333333?text=${initials}${i}`;
+        const dob = faker.date.birthdate().toDateString();
 
         voters.push({
             name,
             cardNumber,
             station,
-            imageUrl,
+            dob,
             isAgent: false,
             isReferee: false
         });
@@ -50,19 +48,23 @@ export function generateData(amount: number = 500): Voter[] {
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const transformData = (parsedData: any[]): Voter[] => {
-    return parsedData.map((item) => ({
-        // Map the keys from the CSV object to the Voter interface keys.
-        name: item["Name"],
-        cardNumber: item["Card Number"],
-        station: item["Station"],
-        imageUrl: item["ImageUrl"],
+    return parsedData.map((item) => {
+        const data = {
+            // Map the keys from the CSV object to the Voter interface keys.
+            name: `${item["firstname"]} ${item["middlename"]} ${item["surname"]}`,
+            cardNumber: item["voter_id"],
+            dob: item["date_of_birth"],
+            station: item["ward"],
 
-        // Convert the string booleans "true" / "false" to actual boolean types.
-        // If the field is missing (undefined), the comparison will return false, which is the desired default.
-        isAgent: item["isAgent"] === "true",
-        isReferee: item["isReferee"] === "true",
+            // Convert the string booleans "true" / "false" to actual boolean types.
+            // If the field is missing (undefined), the comparison will return false, which is the desired default.
+            isAgent: item["isAgent"] === "true",
+            isReferee: item["isReferee"] === "true",
 
-        // Default the designation to an empty string if the field is not present in the CSV data.
-        designation: item["designation"] || "",
-    }));
+            // Default the designation to an empty string if the field is not present in the CSV data.
+            designation: item["designation"] || "",
+        };
+
+        return { ...data, cardNumber: data.cardNumber }
+    });
 };

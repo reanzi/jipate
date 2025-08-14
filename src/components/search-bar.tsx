@@ -13,7 +13,7 @@ interface Voter {
 	name: string;
 	cardNumber: string;
 	station: string;
-	imageUrl: string;
+	dob: string;
 }
 
 // Define the component's props
@@ -75,24 +75,24 @@ const SearchBar: React.FC<SearchBarProps> = ({
 	const deferredInputValue = useDeferredValue(inputValue);
 	// A boolean to indicate if a search is pending
 	const isSearching = deferredInputValue !== inputValue;
-
 	// Filter suggestions based on the internal input value, limited to 5 results
 	const filteredSuggestions = useMemo(() => {
 		if (deferredInputValue.trim() === "") {
 			return [];
 		}
+		const upperCaseInputValue = deferredInputValue.toUpperCase().trim();
 		return voters
-			.filter(
-				(voter) =>
-					voter.name.toLowerCase().includes(deferredInputValue.toLowerCase()) ||
-					voter.cardNumber
-						.toLowerCase()
-						.includes(deferredInputValue.toLowerCase()) ||
-					voter.station
-						.toLowerCase()
-						.includes(deferredInputValue.toLowerCase()),
-			)
-			.slice(0, 5); // Limit suggestions to the top 5
+			.filter((voter) => {
+				const name = voter.name || "";
+				const cardNumber = voter.cardNumber || "";
+				const station = voter.station || "";
+				return (
+					name.includes(upperCaseInputValue) ||
+					cardNumber.includes(upperCaseInputValue) ||
+					station.includes(upperCaseInputValue)
+				);
+			})
+			.slice(0, 10); // Limit suggestions to the top 5
 	}, [deferredInputValue, voters]);
 
 	useEffect(() => {
@@ -188,11 +188,6 @@ const SearchBar: React.FC<SearchBarProps> = ({
 										onMouseDown={(e) => e.preventDefault()} // Prevent input blur on list item click
 										onClick={() => handleSelectSuggestion(suggestion)}
 									>
-										<img
-											src={suggestion.imageUrl}
-											alt={suggestion.name}
-											className="w-8 h-8 rounded-full mr-3"
-										/>
 										<div>
 											<div className="text-sm font-semibold">
 												{suggestion.name}

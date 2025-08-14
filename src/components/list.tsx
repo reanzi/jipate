@@ -49,14 +49,14 @@ const Row = ({
 			className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 flex items-center"
 		>
 			{/* Hide on mobile, show on sm and up */}
-			<div className="hidden sm:flex py-1 px-4 w-[10%]">
+			{/* <div className="hidden sm:flex py-1 px-4 w-[10%]">
 				<img
 					src={voter.imageUrl}
 					alt={`${voter.name}'s profile`}
 					className="w-10 h-10 rounded-full object-cover border-2 border-gray-200 dark:border-gray-500"
 				/>
-			</div>
-			<div className="py-1 px-4 w-1/2 sm:w-[25%] font-medium text-gray-900 whitespace-nowrap dark:text-white truncate">
+			</div> */}
+			<div className="py-1 px-4 w-1/2 sm:w-[35%] font-medium text-gray-900 whitespace-nowrap dark:text-white truncate">
 				{voter.name}
 			</div>
 			<div className="py-1 px-4 w-1/2 sm:w-[20%] truncate">
@@ -67,7 +67,7 @@ const Row = ({
 				{voter.station}
 			</div>
 			{/* Hide on mobile, show on sm and up */}
-			<div className="hidden sm:flex py-1 px-4 w-[20%]">
+			<div className="hidden sm:flex py-1 px-4 w-[20%] border0l border-amber-300">
 				<label className="flex items-center space-x-2">
 					{/*
           <Checkbox
@@ -113,10 +113,10 @@ const List: React.FC<VoterListProps> = ({ voters }) => {
 				<thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
 					<tr>
 						{/* Hide on mobile, show on sm and up */}
-						<th scope="col" className="hidden sm:table-cell py-3 px-6 w-[10%]">
+						{/* <th scope="col" className="hidden sm:table-cell py-3 px-6 w-[10%]">
 							Image
-						</th>
-						<th scope="col" className="py-3 px-6 w-1/2 sm:w-[25%]">
+						</th> */}
+						<th scope="col" className="py-3 px-6 w-1/2 sm:w-[35%]">
 							Name
 						</th>
 						<th scope="col" className="py-3 px-6 w-1/2 sm:w-[20%]">
@@ -127,10 +127,7 @@ const List: React.FC<VoterListProps> = ({ voters }) => {
 							Station
 						</th>
 						{/* Hide on mobile, show on sm and up */}
-						<th
-							scope="col"
-							className="hidden sm:table-cell py-3 px-6 w-[20%] text-center"
-						>
+						<th scope="col" className="hidden sm:table-cell py-3 px-6 w-[20%] ">
 							Role
 						</th>
 					</tr>
