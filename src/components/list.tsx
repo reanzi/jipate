@@ -117,14 +117,14 @@ const List: React.FC<VoterListProps> = ({ voters }) => {
 							Image
 						</th> */}
 						<th scope="col" className="py-3 px-6 w-1/2 sm:w-[35%]">
-							Name
+							Full name
 						</th>
 						<th scope="col" className="py-3 px-6 w-1/2 sm:w-[20%]">
 							Card Number
 						</th>
 						{/* Hide on mobile, show on sm and up */}
 						<th scope="col" className="hidden sm:table-cell py-3 px-6 w-[25%]">
-							Station
+							Ward
 						</th>
 						{/* Hide on mobile, show on sm and up */}
 						<th scope="col" className="hidden sm:table-cell py-3 px-6 w-[20%] ">
