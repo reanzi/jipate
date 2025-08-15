@@ -3,12 +3,17 @@ import { createRoot } from "react-dom/client";
 import { NuqsAdapter } from "nuqs/adapters/react";
 import "./index.css";
 import App from "./App.tsx";
+import { ConvexProvider, ConvexReactClient } from "convex/react";
+
+const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL as string);
 
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
-		<NuqsAdapter>
-			<App />
-		</NuqsAdapter>
+		<ConvexProvider client={convex}>
+			<NuqsAdapter>
+				<App />
+			</NuqsAdapter>
+		</ConvexProvider>
 	</StrictMode>,
 );
 

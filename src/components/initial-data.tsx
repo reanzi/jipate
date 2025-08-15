@@ -46,7 +46,7 @@ export const InitialData = () => {
 				// Cast results data to the Voter array type
 				const parsedData = transformData(results.data);
 				// Set the app state with the parsed data in "DRIVE" mode
-				console.log("UPLOADED DATA: ", JSON.stringify(parsedData, null, 2));
+				// console.log("UPLOADED DATA: ", JSON.stringify(parsedData, null, 2));
 				setAppState({
 					mode: "DRIVE",
 					data: parsedData,
