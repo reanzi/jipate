@@ -7,16 +7,33 @@ import { faker } from '@faker-js/faker'; // Import faker library
  * @param amount The number of voter records to generate. Defaults to 500 if not provided.
  * @returns An array of Voter objects.
  */
+
+const generateCardNumber = () => {
+    // Generate a random 4-digit number string.
+    const part1 = faker.string.numeric(4);
+    // Generate another random 4-digit number string.
+    const part2 = faker.string.numeric(4);
+    // Generate a random 3-digit number string.
+    const part3 = faker.string.numeric(3);
+    // Generate a single random digit.
+    const part4 = faker.string.numeric(1);
+
+    // Combine all the parts with the static "T-" prefix and dashes.
+    return `T-${part1}-${part2}-${part3}-${part4}`;
+};
 export function generateData(amount: number = 500): Voter[] {
     const voters: Voter[] = [];
     const stations = ['Station A', 'Station B', 'Station C', 'Station D', 'Station E'];
 
     for (let i = 1; i <= amount; i++) {
         // Generate a full name using faker.js for more diverse names
-        const name = faker.person.fullName();
+        const firstName = faker.person.firstName().toUpperCase();
+        const middleName = faker.person.middleName().toUpperCase();
+        const surname = faker.person.lastName().toUpperCase();
+
 
         // Generate a unique card number (padded with leading zeros)
-        const cardNumber = `VC-${String(i).padStart(5, '0')}`;
+        const cardNumber = generateCardNumber();
 
         // Assign a random station
         const station = stations[Math.floor(Math.random() * stations.length)];
@@ -24,7 +41,9 @@ export function generateData(amount: number = 500): Voter[] {
         const dob = faker.date.birthdate().toDateString();
 
         voters.push({
-            name,
+            firstName,
+            middleName,
+            surname,
             cardNumber,
             station,
             dob,
@@ -51,7 +70,10 @@ export const transformData = (parsedData: any[]): Voter[] => {
     return parsedData.map((item) => {
         const data = {
             // Map the keys from the CSV object to the Voter interface keys.
-            name: `${item["firstname"]} ${item["middlename"]} ${item["surname"]}`,
+            // name: `${item["firstname"]} ${item["middlename"]} ${item["surname"]}`,
+            firstName: item["firstname"],
+            middleName: item["middlename"],
+            surname: item["surname"],
             cardNumber: item["voter_id"],
             dob: item["date_of_birth"],
             station: item["ward"],
