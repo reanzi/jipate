@@ -7,7 +7,6 @@ import { SettingMenu } from "./components/setting-menu";
 import { ThemeToggle } from "./components/theme-toggle";
 // import { useSetupModal } from "./features/setup/state/use-setup-modal";
 import { MarkdownDialog } from "./components/about-dialog";
-import { InitialData } from "./components/initial-data";
 import { LoadingUI } from "./components/loading-ui";
 import { useInitializeData, useStoreData } from "./hooks/use-store-data"; // Updated import
 import { capitalizeFirstLetter } from "./lib/utils";
@@ -23,11 +22,13 @@ import readmeContent from "../README.md?raw";
 import { useFilterModal } from "./features/setup/state/use-filter-modal";
 import { useUrlState } from "./hooks/use-url-state";
 import type { Voter } from "./types";
+import { InitialData } from "./components/initial-data";
 
 const App: React.FC = () => {
 	// Destructure the new state and setter functions
 	const { isInitializing } = useInitializeData();
 	const appState = useStoreData((state) => state.appState);
+	const restore = useStoreData((state) => state.resetStore);
 	const isDataLoaded = useStoreData((state) => state.isDataLoaded);
 	const onOpen = useFilterModal((state) => state.onOpen);
 	const [{ centers: center }] = useUrlState();
@@ -67,6 +68,9 @@ const App: React.FC = () => {
 		return "light";
 	});
 
+	useEffect(() => {
+		restore();
+	}, [restore]);
 	// const [lastScrollY, setLastScrollY] = useState(0);
 	// Apply the theme class to the document's html element
 	useEffect(() => {
