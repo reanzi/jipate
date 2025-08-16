@@ -73,7 +73,7 @@ export function TwoColumnSearchableInput({
 						: "All centers"}
 					{value ? (
 						<span
-							className="absolute right-0.5 h-7 ml-0 z-30 p-[5px] bg-destructive rounded-sm"
+							className="absolute right-0.5 h-7 ml-0 z-30 p-[5px] bg-destructive rounded-sm text-white"
 							onClick={(e) => {
 								// Stop the click event from propagating up to the parent PopoverTrigger
 								e.stopPropagation();
