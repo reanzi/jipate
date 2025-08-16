@@ -42,7 +42,7 @@ const frameworks = [
 	},
 ];
 
-export function SearchableInput() {
+export function SearchableInput({onSelect}:{onSelect?: (name: string) =>void}) {
 	const [open, setOpen] = React.useState(false);
 	const [value, setValue] = React.useState("");
 
@@ -76,6 +76,9 @@ export function SearchableInput() {
 									value={framework.value}
 									onSelect={(currentValue) => {
 										setValue(currentValue === value ? "" : currentValue);
+										if(onSelect){
+											onSelect(value);
+										}
 										setOpen(false);
 									}}
 								>

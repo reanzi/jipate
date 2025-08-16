@@ -48,7 +48,6 @@ const App: React.FC = () => {
 	});
 
 	// const [lastScrollY, setLastScrollY] = useState(0);
-
 	// Apply the theme class to the document's html element
 	useEffect(() => {
 		if (typeof document !== "undefined") {

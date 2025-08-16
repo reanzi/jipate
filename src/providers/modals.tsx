@@ -1,4 +1,5 @@
 import { SetupModal } from "@/components/setup-modal";
+import { FilterDialog } from "@/components/filter-dialog"
 import { useEffect, useState } from "react";
 export const ModalsProvider = () => {
 	const [mounted, setMounted] = useState(false);
@@ -11,6 +12,7 @@ export const ModalsProvider = () => {
 	return (
 		<>
 			<SetupModal />
+			<FilterModal />
 		</>
 	);
 };
