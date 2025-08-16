@@ -6,14 +6,16 @@ export const useUrlState = () => {
         searchTerm: parseAsString.withDefault(''),
         sortBy: parseAsString.withDefault(''),
         centers: parseAsString.withDefault(''),
-        facilityId: parseAsString.withDefault('')
+        facilityId: parseAsString.withDefault(''),
+        voterId: parseAsString.withDefault('')
     },
         {
             urlKeys: {
                 searchTerm: 'q',
                 sortBy: 's',
                 centers: 'c',
-                facilityId: 'f'
+                facilityId: 'f',
+                voterId: 'sv',
             },
             throttleMs: 100, // Throttle rapid updates
             shallow: true,   // Prevent full page re-renders

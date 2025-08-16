@@ -134,6 +134,8 @@ const App: React.FC = () => {
 								<span className="md:hidden text-xs font-mono tracking-wide  text-blue-700  dark:text-blue-100 rounded-md leading-0">
 									{appState?.mode === "TEST"
 										? "Testing"
+										: center
+										? capitalizeFirstLetter(center)
 										: capitalizeFirstLetter(
 												appState?.facility ?? "No facility",
 										  )}
@@ -144,7 +146,7 @@ const App: React.FC = () => {
 							</div>
 						)}
 						{isDataLoaded && (
-							<div className="relative flex flex-1 z-10 header pl-2 md:px-6 py-2 max-w-4xl mx-auto">
+							<div className="relative flex flex-1 z-10 header pl-2 md:px-6 py-2 max-w-4xl mx-auto mr-2">
 								<SearchBar
 									isFiltering={isFiltering}
 									onSelectSuggestion={setSearchTerm}
@@ -153,7 +155,7 @@ const App: React.FC = () => {
 								/>
 							</div>
 						)}
-						<div className="ml-auto flex items-center">
+						<div className="ml-auto flex items-center p">
 							{isDataLoaded && (
 								<>
 									<SlidersIcon

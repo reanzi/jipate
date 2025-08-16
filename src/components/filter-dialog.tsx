@@ -5,6 +5,7 @@
 import {
 	Dialog,
 	DialogContent,
+	DialogDescription,
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
@@ -83,9 +84,9 @@ export const FilterDialog = () => {
 					<DialogTitle className="cursor-default select-none font-extrabold">
 						Filter
 					</DialogTitle>
-					<p className="text-sm text-muted-foreground cursor-default select-none">
+					<DialogDescription className="text-sm text-muted-foreground cursor-default select-none">
 						Better view voters you need, based on your ward.
-					</p>
+					</DialogDescription>
 				</DialogHeader>
 				<div className="w-full flex flex-row items-center rounded-lg border-none p-3 shadow-sm">
 					<TwoColumnSearchableInput

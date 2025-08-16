@@ -72,10 +72,8 @@ export function TwoColumnSearchableInput({
 								?.label
 						: "All centers"}
 					{value ? (
-						<Button
-							size={"sm"}
-							variant={"destructive"}
-							className="absolute right-0.5 h-7 ml-0 z-30"
+						<span
+							className="absolute right-0.5 h-7 ml-0 z-30 p-[5px] bg-destructive rounded-sm"
 							onClick={(e) => {
 								// Stop the click event from propagating up to the parent PopoverTrigger
 								e.stopPropagation();
@@ -83,7 +81,7 @@ export function TwoColumnSearchableInput({
 							}}
 						>
 							Reset{" "}
-						</Button>
+						</span>
 					) : (
 						<ChevronsUpDownIcon className="ml-auto h-4 w-4 shrink-0 opacity-50" />
 					)}
