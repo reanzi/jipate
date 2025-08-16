@@ -13,23 +13,22 @@ export const InitialData = () => {
 	const { setAppState } = useStoreData();
 	// State for the slider value, initialized to 500 records
 	const [amount, setAmount] = useState<number[]>([500]);
-	const [facilityName, setFacilityName] = useState<string>("");
 	// New state to manage the loading status
 	const [isGenerating, setIsGenerating] = useState(false);
 
 	// Handle file upload and parsing
 	const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];
-		if (!facilityName) {
-			toast("Missing field", {
-				description: "Please provide your facility's name.",
-				action: {
-					label: "Undo",
-					onClick: () => console.log("Undo"),
-				},
-			});
-			return;
-		}
+		// if (!facilityName) {
+		// 	toast("Missing field", {
+		// 		description: "Please provide your facility's name.",
+		// 		action: {
+		// 			label: "Undo",
+		// 			onClick: () => console.log("Undo"),
+		// 		},
+		// 	});
+		// 	return;
+		// }
 		if (!file) {
 			toast("Missing field", {
 				description: "Please provide your facility's name.",
@@ -50,7 +49,7 @@ export const InitialData = () => {
 				setAppState({
 					mode: "DRIVE",
 					data: parsedData,
-					facility: facilityName,
+					facility: "bagamoyo",
 				});
 			},
 			error: (error) => {
@@ -75,7 +74,7 @@ export const InitialData = () => {
 				setAppState({
 					mode: "TEST",
 					data: mockData,
-					facility: facilityName,
+					facility: "bagamoyo",
 				});
 			} catch (error) {
 				console.error("Error generating mock data:", error);
@@ -114,13 +113,6 @@ export const InitialData = () => {
 			) : (
 				<>
 					<div className="flex flex-col space-y-8 mx-auto">
-						<input
-							type="text"
-							placeholder="District Name"
-							value={facilityName}
-							onChange={(e) => setFacilityName(e.target.value)}
-							className="mx-auto w-full max-w-sm px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600"
-						/>
 						<input
 							type="file"
 							onChange={handleFileUpload}
