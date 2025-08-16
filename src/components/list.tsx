@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import type { Voter } from "@/types";
 import { FixedSizeList } from "react-window"; // Import a windowing library
+import { useVoterDetailsDialog } from "@/features/setup/state/use-voter-details-dialog";
+import { useUrlState } from "@/hooks/use-url-state";
 
 interface VoterListProps {
 	voters: Voter[];
@@ -40,22 +42,36 @@ const Row = ({
 	style: React.CSSProperties;
 	data: Voter[];
 }) => {
+	const onOpen = useVoterDetailsDialog((state) => state.onOpen);
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const [_, setState] = useUrlState();
 	const voter = data[index];
 	if (!voter) return null;
 
+	// Determine if the row index is even or odd
+	const isEven = index % 2 === 0;
+
+	// Apply different background colors based on even/odd index
+	const rowClasses = `
+        border-b dark:border-gray-700 hover:bg-gray-100/50 dark:hover:bg-gray-700/20 cursor-pointer
+        ${isEven ? "bg-gray-50 dark:bg-gray-800" : "bg-white dark:bg-gray-900"}
+        flex items-center
+    `;
+
+	const handleOnClick = () => {
+		setState({ voterId: voter.cardNumber });
+		onOpen();
+	};
 	return (
-		<div
-			style={style}
-			className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 flex items-center"
-		>
+		<motion.div style={style} className={rowClasses} onClick={handleOnClick}>
 			{/* Hide on mobile, show on sm and up */}
 			{/* <div className="hidden sm:flex py-1 px-4 w-[10%]">
-				<img
-					src={voter.imageUrl}
-					alt={`${voter.name}'s profile`}
-					className="w-10 h-10 rounded-full object-cover border-2 border-gray-200 dark:border-gray-500"
-				/>
-			</div> */}
+                <img
+                    src={voter.imageUrl}
+                    alt={`${voter.name}'s profile`}
+                    className="w-10 h-10 rounded-full object-cover border-2 border-gray-200 dark:border-gray-500"
+                />
+            </div> */}
 			<div className="py-1 px-4 w-1/2 sm:w-[35%] font-medium text-gray-900 whitespace-nowrap dark:text-white truncate">
 				{`${voter.firstName} ${voter.middleName} ${voter.surname}`}
 			</div>
@@ -77,17 +93,16 @@ const Row = ({
           />
           */}
 					{/* <input
-						type="checkbox"
-						checked={voter.used}
-						onChange={() => onMarkUsed(voter.cardNumber, voter.station)}
-						className="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600"
-					/> */}
+                        type="checkbox"
+                        checked={voter.used}
+                        onChange={() => onMarkUsed(voter.cardNumber, voter.station)}
+                        className="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600"
+                    /> */}
 				</label>
 			</div>
-		</div>
+		</motion.div>
 	);
 };
-
 const List: React.FC<VoterListProps> = ({ voters }) => {
 	const windowSize = useWindowSize();
 	const headerHeight = 168; // This value is derived from the pt-[180px] on the main content div in App.tsx
