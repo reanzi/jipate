@@ -1,3 +1,4 @@
+import type { Voter } from "@/types";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { SearchIcon, XIcon, Loader2 } from "lucide-react";
 import React, {
@@ -8,13 +9,13 @@ import React, {
 	useDeferredValue,
 } from "react";
 
-// Define the Voter interface
-interface Voter {
-	name: string;
-	cardNumber: string;
-	station: string;
-	dob: string;
-}
+// // Define the Voter interface
+// interface Voter {
+// 	name: string;
+// 	cardNumber: string;
+// 	station: string;
+// 	dob: string;
+// }
 
 // Define the component's props
 interface SearchBarProps {
@@ -83,7 +84,8 @@ const SearchBar: React.FC<SearchBarProps> = ({
 		const upperCaseInputValue = deferredInputValue.toUpperCase().trim();
 		return voters
 			.filter((voter) => {
-				const name = voter.name || "";
+				// const name = voter.firstName || voter.middleName || voter.surname || "";
+				const name = `${voter.firstName} ${voter.middleName} ${voter.surname}`;
 				const cardNumber = voter.cardNumber || "";
 				const station = voter.station || "";
 				return (
@@ -112,11 +114,13 @@ const SearchBar: React.FC<SearchBarProps> = ({
 	};
 
 	// Handle a click on a suggestion item
-	const handleSelectSuggestion = (suggestion: Voter) => {
+	const handleSelectSuggestion = (voter: Voter) => {
 		// Set the input value to the selected suggestion's name
-		setInputValue(suggestion.name);
+		const name = `${voter.firstName} ${voter.middleName} ${voter.surname}`;
+		console.log("Selected => ", JSON.stringify(voter, null, 2));
+		setInputValue(name);
 		// Update the parent's state to filter the main list
-		onSelectSuggestion(suggestion.name);
+		onSelectSuggestion(name);
 		// Explicitly close the suggestions box
 		setShowSuggestions(false);
 	};
@@ -190,7 +194,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
 									>
 										<div>
 											<div className="text-sm font-semibold">
-												{suggestion.name}
+												{`${suggestion.firstName} ${suggestion.middleName} ${suggestion.surname}`}
 											</div>
 											<div className="text-xs text-gray-500 dark:text-gray-400">
 												{suggestion.cardNumber}

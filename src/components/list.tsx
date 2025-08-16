@@ -57,7 +57,7 @@ const Row = ({
 				/>
 			</div> */}
 			<div className="py-1 px-4 w-1/2 sm:w-[35%] font-medium text-gray-900 whitespace-nowrap dark:text-white truncate">
-				{voter.name}
+				{`${voter.firstName} ${voter.middleName} ${voter.surname}`}
 			</div>
 			<div className="py-1 px-4 w-1/2 sm:w-[20%] truncate">
 				{voter.cardNumber}

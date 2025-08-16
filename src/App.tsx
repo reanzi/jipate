@@ -72,7 +72,7 @@ const App: React.FC = () => {
 		const upperCaseInputValue = deferredSearchTerm.toUpperCase().trim();
 		// Filter the list based on the deferred search term
 		return voters.filter((voter) => {
-			const name = voter.name || "";
+			const name = `${voter.firstName} ${voter.middleName} ${voter.surname}`;
 			const cardNumber = voter.cardNumber || "";
 			const station = voter.station || "";
 			return (

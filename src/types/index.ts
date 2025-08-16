@@ -4,7 +4,9 @@
  * Defines the structure for a Voter object.
  */
 export interface Voter {
-    name: string;
+    firstName: string;
+    middleName: string;
+    surname: string;
     cardNumber: string;
     station: string;
     dob: string;
