@@ -42,10 +42,15 @@ const frameworks = [
 	},
 ];
 
-export function SearchableInput({onSelect}:{onSelect?: (name: string) =>void}) {
+export function SearchableInput({
+	onSelect,
+	options = frameworks,
+}: {
+	onSelect?: (name: string) => void;
+	options?: { value: string; label: string }[];
+}) {
 	const [open, setOpen] = React.useState(false);
 	const [value, setValue] = React.useState("");
-
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
 			<PopoverTrigger asChild>
@@ -59,7 +64,7 @@ export function SearchableInput({onSelect}:{onSelect?: (name: string) =>void}) {
 						Center:
 					</span>
 					{value
-						? frameworks.find((framework) => framework.value === value)?.label
+						? options.find((option) => option.value === value)?.label
 						: "All centers"}
 					<ChevronsUpDownIcon className="ml-auto h-4 w-4 shrink-0 opacity-50" />
 				</Button>
@@ -68,15 +73,15 @@ export function SearchableInput({onSelect}:{onSelect?: (name: string) =>void}) {
 				<Command>
 					<CommandInput placeholder="Search center..." className="" />
 					<CommandList>
-						<CommandEmpty>No framework found.</CommandEmpty>
+						<CommandEmpty>No option found.</CommandEmpty>
 						<CommandGroup>
-							{frameworks.map((framework) => (
+							{options.map((option) => (
 								<CommandItem
-									key={framework.value}
-									value={framework.value}
+									key={option.value}
+									value={option.value}
 									onSelect={(currentValue) => {
 										setValue(currentValue === value ? "" : currentValue);
-										if(onSelect){
+										if (onSelect) {
 											onSelect(value);
 										}
 										setOpen(false);
@@ -85,10 +90,10 @@ export function SearchableInput({onSelect}:{onSelect?: (name: string) =>void}) {
 									<CheckIcon
 										className={cn(
 											"mr-2 h-4 w-4",
-											value === framework.value ? "opacity-100" : "opacity-0",
+											value === option.value ? "opacity-100" : "opacity-0",
 										)}
 									/>
-									{framework.label}
+									{option.label}
 								</CommandItem>
 							))}
 						</CommandGroup>

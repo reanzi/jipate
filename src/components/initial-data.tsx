@@ -116,7 +116,7 @@ export const InitialData = () => {
 					<div className="flex flex-col space-y-8 mx-auto">
 						<input
 							type="text"
-							placeholder="Facility Name"
+							placeholder="District Name"
 							value={facilityName}
 							onChange={(e) => setFacilityName(e.target.value)}
 							className="mx-auto w-full max-w-sm px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600"

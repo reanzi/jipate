@@ -10,13 +10,12 @@ import {
 } from "@/components/ui/dialog";
 // import { useCurrentMember } from '../api/use-current-member';
 // import VerificationInput from 'react-verification-input';
-import { useSetupModal } from "@/features/setup/state/use-setup-modal";
-import { SliderInput } from "./slider-input";
-import { Button } from "./ui/button";
-import { useState } from "react";
-import { Label } from "./ui/label";
-import { Switch } from "./ui/switch";
-import { ResizablePanel } from "./resizable-panel";
+import { useFilterModal } from "@/features/setup/state/use-filter-modal";
+import { useStoreData } from "@/hooks/use-store-data";
+import { useUrlState } from "@/hooks/use-url-state";
+import type { Voter } from "@/types";
+import { useMemo } from "react";
+import { TwoColumnSearchableInput } from "./two-column-searchable-input";
 
 // const FormSchema = z.object({
 //   // code: z.number({required_error: "Please enter the code"}),
@@ -38,14 +37,45 @@ import { ResizablePanel } from "./resizable-panel";
  */
 
 export const FilterDialog = () => {
-	//  const {data: member} = useCurrentMember()
-	const [value, setValue] = useState<number[]>([5000]);
-	const onClose = useSetupModal((state) => state.onClose);
-	const isOpen = useSetupModal((state) => state.isOpen);
-	const [isTest, setIsTest] = useState(true);
-const handleOnSelect = (value:string) =>{
-setUralState({selectedWard: value})
-}
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const [_, setUralState] = useUrlState();
+	const onClose = useFilterModal((state) => state.onClose);
+	const isOpen = useFilterModal((state) => state.isOpen);
+	const handleOnSelect = (value: string) => {
+		setUralState({ centers: value });
+	};
+
+	const appState = useStoreData((state) => state.appState);
+
+	type FilterOption = {
+		value: string;
+		label: string;
+	};
+	const getStations = (records: Voter[]): FilterOption[] => {
+		const stations = new Set<string>();
+
+		// Iterate through the records and add each station to the Set.
+		// The Set will automatically handle duplicates.
+		records.forEach((record) => {
+			const stationName = record.station ?? "";
+			if (stationName) {
+				stations.add(record.station);
+			}
+		});
+
+		// Convert the Set back to an array and map each unique station
+		// to an object with 'value' and 'label' properties.
+		return Array.from(stations).map((station) => ({
+			value: station,
+			label: station,
+		}));
+	};
+
+	const options = useMemo(() => {
+		return getStations(appState?.data ?? []);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [appState]);
+
 	return (
 		<Dialog open={isOpen} onOpenChange={onClose}>
 			<DialogContent>
@@ -57,30 +87,12 @@ setUralState({selectedWard: value})
 						Better view voters you need, based on your ward.
 					</p>
 				</DialogHeader>
-				<div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
-					<Label
-						htmlFor="test-mode"
-						className="space-y-0.5 flex flex-col items-start"
-					>
-						Ward&apos; name
-					</Label>
-					<SearchableInput onSelect={handleOnSelect} />
+				<div className="w-full flex flex-row items-center rounded-lg border-none p-3 shadow-sm">
+					<TwoColumnSearchableInput
+						onSelect={handleOnSelect}
+						options={options}
+					/>
 				</div>
-				<ResizablePanel>
-					<div className="w-full flex items-center py-8">
-						{isTest && (
-							<div className="w-full flex items-center gap-3 p-2">
-								<SliderInput value={value} onValueChange={setValue} />
-								<Button
-									className="ml-auto"
-									onClick={() => alert(JSON.stringify(value[0], null, 2))}
-								>
-									Generate resources
-								</Button>
-							</div>
-						)}
-					</div>
-				</ResizablePanel>
 			</DialogContent>
 		</Dialog>
 	);

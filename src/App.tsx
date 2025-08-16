@@ -18,19 +18,39 @@ import { ThemeProvider } from "./providers/theme";
 // The ?raw suffix tells the bundler to load the file content as a string.
 // You would replace './README.md' with the correct path to your file.
 import { SlidersIcon } from "lucide-react";
-import { toast, Toaster } from "sonner";
+import { Toaster } from "sonner";
 import readmeContent from "../README.md?raw";
+import { useFilterModal } from "./features/setup/state/use-filter-modal";
+import { useUrlState } from "./hooks/use-url-state";
+import type { Voter } from "./types";
 
 const App: React.FC = () => {
 	// Destructure the new state and setter functions
 	const { isInitializing } = useInitializeData();
 	const appState = useStoreData((state) => state.appState);
 	const isDataLoaded = useStoreData((state) => state.isDataLoaded);
+	const onOpen = useFilterModal((state) => state.onOpen);
+	const [{ centers: center }] = useUrlState();
 
 	// Get voters and isDataLoaded status from the new appState
-	const voters = useMemo(() => appState?.data || [], [appState?.data]);
+	// const votersT = useMemo(() => appState?.data || [], [appState?.data]);
 	// const onOpen = useSetupModal((state) => state.onOpen);
 
+	const voters = useMemo(() => {
+		// 1. Get the station parameter from the URL
+
+		// 2. Access the raw data safely
+		const allVoters = (appState?.data as Voter[]) || [];
+
+		// 3. If a station is selected, filter the voters
+		const c = center.toUpperCase();
+		if (c) {
+			return allVoters.filter((voter) => voter.station === c);
+		}
+
+		// 4. If no station is selected, return all voters
+		return allVoters;
+	}, [appState?.data, center]);
 	// State for the search term
 	const [searchTerm, setSearchTerm] = useState("");
 	// Use useDeferredValue to defer the search term, preventing UI freezes on large lists
@@ -80,7 +100,7 @@ const App: React.FC = () => {
 				station.includes(upperCaseInputValue)
 			);
 		});
-	}, [voters, deferredSearchTerm]);
+	}, [deferredSearchTerm, voters]);
 
 	if (isInitializing) {
 		return <LoadingUI />;
@@ -104,6 +124,8 @@ const App: React.FC = () => {
 									<span className="hidden md:inline ml-2 md:text-md font-mono tracking-wide bg-blue-100 text-blue-700 dark:bg-blue-800/50 dark:text-blue-100 px-4 pt-[1.5px] pb-0.5 rounded-md">
 										{appState?.mode === "TEST"
 											? "Testing"
+											: center
+											? capitalizeFirstLetter(center)
 											: capitalizeFirstLetter(
 													appState?.facility ?? "No facility",
 											  )}
@@ -137,11 +159,7 @@ const App: React.FC = () => {
 									<SlidersIcon
 										size={18}
 										className="pr-0.5 cursor-pointer"
-										onClick={() =>
-											toast("Filter actions", {
-												description: "This action will come soon.",
-											})
-										}
+										onClick={onOpen}
 									/>
 									<SettingMenu />
 								</>
