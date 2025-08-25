@@ -9,10 +9,14 @@ import { useVoterDetailsDialog } from "@/features/setup/state/use-voter-details-
 import { useStoreData } from "@/hooks/use-store-data";
 import { useUrlState } from "@/hooks/use-url-state";
 import { useMemo } from "react";
+import { Checkbox } from "./ui/checkbox";
+import { Label } from "./ui/label";
 
 export const VoterDetailsDialog = () => {
 	const isOpen = useVoterDetailsDialog((state) => state.isOpen);
 	const onClose = useVoterDetailsDialog((state) => state.onClose);
+
+	const { updateVoter: onUpdateVoter } = useStoreData();
 
 	const [{ voterId }, setState] = useUrlState();
 	const appState = useStoreData((state) => state.appState);
@@ -25,6 +29,29 @@ export const VoterDetailsDialog = () => {
 		setState({ voterId: "" });
 		onClose();
 	};
+	const handleMark = (identifier: "agent" | "sponsor") => {
+		if (!selectedVoter) return;
+		if (identifier === "agent") {
+			// Call the new onUpdateVoter prop with the voter's card number and the specific update
+			onUpdateVoter(selectedVoter.cardNumber, {
+				isAgent: !selectedVoter.isAgent,
+			});
+		} else if (identifier === "sponsor") {
+			// Call the new onUpdateVoter prop with the voter's card number and the specific update
+			onUpdateVoter(selectedVoter.cardNumber, {
+				isReferee: !selectedVoter.isReferee,
+			});
+		}
+	};
+
+	// Define the colors for each checkbox
+	const sponsorColorClasses = selectedVoter?.isReferee
+		? "bg-blue-600 border-blue-600 dark:bg-blue-500 dark:border-blue-500"
+		: "border-gray-400 dark:border-gray-500";
+
+	const presenterColorClasses = selectedVoter?.isAgent
+		? "bg-green-600 border-green-600 dark:bg-green-500 dark:border-green-500"
+		: "border-gray-400 dark:border-gray-500";
 	return (
 		<Dialog open={isOpen} onOpenChange={handleOpenChange}>
 			<DialogContent className="sm:max-w-[425px]">
@@ -74,6 +101,28 @@ export const VoterDetailsDialog = () => {
 							<p className="col-span-3 font-medium">
 								{selectedVoter.isReferee ? "Yes" : "No"}
 							</p>
+						</div>
+					</div>
+				)}
+				{selectedVoter && (
+					<div className="py-4 px-4 flex justify-around items-center w-full  border-t border-muted-foreground">
+						<div className="flex items-center gap-3">
+							<Checkbox
+								id="sponsor"
+								checked={selectedVoter.isReferee}
+								onCheckedChange={() => handleMark("sponsor")}
+								className={`h-5 w-5 rounded-sm transition-colors duration-200 ease-in-out ${sponsorColorClasses}`}
+							/>
+							<Label htmlFor="sponsor">As Sponsor</Label>
+						</div>
+						<div className="flex items-center gap-3">
+							<Checkbox
+								id="agent"
+								checked={selectedVoter.isAgent}
+								onCheckedChange={() => handleMark("agent")}
+								className={`h-5 w-5 rounded-sm transition-colors duration-200 ease-in-out ${presenterColorClasses}`}
+							/>
+							<Label htmlFor="agent">As agent</Label>
 						</div>
 					</div>
 				)}

@@ -19,19 +19,23 @@ import { ThemeProvider } from "./providers/theme";
 import { SlidersIcon } from "lucide-react";
 import { Toaster } from "sonner";
 import readmeContent from "../README.md?raw";
+import { InitialData } from "./components/initial-data";
 import { useFilterModal } from "./features/setup/state/use-filter-modal";
 import { useUrlState } from "./hooks/use-url-state";
+import { useVerificationModal } from "./hooks/use-verification";
 import type { Voter } from "./types";
-import { InitialData } from "./components/initial-data";
 
 const App: React.FC = () => {
 	// Destructure the new state and setter functions
 	const { isInitializing } = useInitializeData();
+	const { authId } = useStoreData();
 	const appState = useStoreData((state) => state.appState);
-	const restore = useStoreData((state) => state.resetStore);
 	const isDataLoaded = useStoreData((state) => state.isDataLoaded);
 	const onOpen = useFilterModal((state) => state.onOpen);
 	const [{ centers: center }] = useUrlState();
+
+	const onOTPOpen = useVerificationModal((state) => state.onOpen);
+	const isOpen = useVerificationModal((state) => state.isOpen);
 
 	// Get voters and isDataLoaded status from the new appState
 	// const votersT = useMemo(() => appState?.data || [], [appState?.data]);
@@ -69,10 +73,17 @@ const App: React.FC = () => {
 	});
 
 	useEffect(() => {
-		restore();
-	}, [restore]);
-	// const [lastScrollY, setLastScrollY] = useState(0);
-	// Apply the theme class to the document's html element
+		if (!isInitializing) {
+			// After initialization, if authId is null, show the OTP dialog
+			if (!authId && !isOpen) {
+				onOTPOpen();
+			}
+		}
+	}, [isInitializing, authId, onOTPOpen, isOpen]);
+	// useEffect(() => {
+	// 	restore();
+	// }, [restore]);
+
 	useEffect(() => {
 		if (typeof document !== "undefined") {
 			const htmlElement = document.documentElement;
@@ -175,23 +186,26 @@ const App: React.FC = () => {
 					</div>
 				</header>
 
-				<div className="flex-1 w-full  xpt-[180px] max-w-4xl mx-auto p-1 ">
-					{appState && appState.data.length > 0 ? (
-						<>
-							<AnimatePresence>
-								<List voters={filteredVoters} onMarkUsed={() => {}} />
-							</AnimatePresence>
-							{filteredVoters.length > 0 && (
-								<div className="text-start  pl-3 py-1.5 text-sm dark:text-neutral-50 text-neutral-800 font-mono dark:bg-gray-800 bg-neutral-200 rounded-b-lg">
-									Found {new Intl.NumberFormat().format(filteredVoters.length)}{" "}
-									records
-								</div>
-							)}
-						</>
-					) : (
-						<InitialData />
-					)}
-				</div>
+				{authId && (
+					<div className="flex-1 w-full  xpt-[180px] max-w-4xl mx-auto p-1 ">
+						{appState && appState.data.length > 0 ? (
+							<>
+								<AnimatePresence>
+									<List voters={filteredVoters} />
+								</AnimatePresence>
+								{filteredVoters.length > 0 && (
+									<div className="text-start  pl-3 py-1.5 text-sm dark:text-neutral-50 text-neutral-800 font-mono dark:bg-blue-600 bg-neutral-200 rounded-b-lg">
+										Found{" "}
+										{new Intl.NumberFormat().format(filteredVoters.length)}{" "}
+										records
+									</div>
+								)}
+							</>
+						) : (
+							<InitialData />
+						)}
+					</div>
+				)}
 				{/* It will be rendered with the content from your README.md file */}
 				<MarkdownDialog
 					markdownContent={readmeContent}

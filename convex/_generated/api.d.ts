@@ -13,8 +13,10 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
-import type * as facilities from "../facilities.js";
-import type * as voters from "../voters.js";
+import type * as access from "../access.js";
+import type * as auth from "../auth.js";
+import type * as http from "../http.js";
+import type * as members from "../members.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -25,8 +27,10 @@ import type * as voters from "../voters.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
-  facilities: typeof facilities;
-  voters: typeof voters;
+  access: typeof access;
+  auth: typeof auth;
+  http: typeof http;
+  members: typeof members;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,
