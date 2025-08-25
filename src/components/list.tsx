@@ -115,7 +115,7 @@ const Row = ({
 			</div>
 			{/* Hide on mobile, show on sm and up */}
 			<div
-				className="hidden sm:flex justify-around py-1 px-4 w-[16%] border0l border-amber-300"
+				className="hidden sm:flex justify-around py-1 px-4 w-[18%] border0l border-amber-300"
 				onClick={handleActionClick}
 			>
 				<div className="flex flex-col items-center">
@@ -124,7 +124,7 @@ const Row = ({
 						onCheckedChange={() => handleMark("sponsor")}
 						className={`h-5 w-5 rounded-sm transition-colors duration-200 ease-in-out ${sponsorColorClasses}`}
 					/>
-					<span className="text-[10px] uppercase pt-0.5">sponsor</span>
+					<span className="text-[12px] uppercase pt-0.5">mdhamini</span>
 				</div>
 				<div className="flex flex-col">
 					<Checkbox
@@ -132,7 +132,7 @@ const Row = ({
 						onCheckedChange={() => handleMark("agent")}
 						className={`h-5 w-5 rounded-sm transition-colors duration-200 ease-in-out ${presenterColorClasses}`}
 					/>
-					<span className="text-[10px] uppercase pt-0.5">Agent</span>
+					<span className="text-[12px] uppercase pt-0.5">wakala</span>
 				</div>
 			</div>
 		</motion.div>
@@ -175,18 +175,18 @@ const List = React.memo(({ voters }: VoterListProps) => {
                             Image
                         </th> */}
 						<th scope="col" className="py-3 px-6 w-1/2 sm:w-[33%]">
-							Full name
+							juna kamili
 						</th>
 						<th scope="col" className="py-3 px-6 w-1/2 sm:w-[25%]">
-							Card Number
+							kadi ya kura
 						</th>
 						{/* Hide on mobile, show on sm and up */}
 						<th scope="col" className="hidden sm:table-cell py-3  w-[20%]">
-							Ward
+							kata
 						</th>
 						{/* Hide on mobile, show on sm and up */}
 						<th scope="col" className="hidden sm:table-cell py-3 w-[15%]">
-							Action
+							wadhifa
 						</th>
 					</tr>
 				</thead>

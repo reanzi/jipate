@@ -56,9 +56,9 @@ export const VoterDetailsDialog = () => {
 		<Dialog open={isOpen} onOpenChange={handleOpenChange}>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
-					<DialogTitle>Voter Details</DialogTitle>
+					<DialogTitle>Mpiga kura</DialogTitle>
 					<DialogDescription>
-						Details for{" "}
+						Taarifa kwa ufupi za{" "}
 						<span className="font-semibold capitalize">
 							{selectedVoter?.firstName} {selectedVoter?.surname}
 						</span>
@@ -67,39 +67,41 @@ export const VoterDetailsDialog = () => {
 				{selectedVoter && (
 					<div className="grid gap-4 py-4">
 						<div className="grid grid-cols-4 items-center gap-4">
-							<p className="text-sm text-gray-500 dark:text-gray-400">Name</p>
+							<p className="text-sm text-gray-500 dark:text-gray-400">Jina</p>
 							<p className="col-span-3 font-medium">{`${selectedVoter.firstName} ${selectedVoter.middleName} ${selectedVoter.surname}`}</p>
 						</div>
 						<div className="grid grid-cols-4 items-center gap-4">
 							<p className="text-sm text-gray-500 dark:text-gray-400">
-								Card No.
+								Kadi Na.
 							</p>
 							<p className="col-span-3 font-medium">
 								{selectedVoter.cardNumber}
 							</p>
 						</div>
 						<div className="grid grid-cols-4 items-center gap-4">
-							<p className="text-sm text-gray-500 dark:text-gray-400">DOB</p>
+							<p className="text-sm text-gray-500 dark:text-gray-400">
+								Kuzaliwa
+							</p>
 							<p className="col-span-3 font-medium">{selectedVoter.dob}</p>
 						</div>
 						<div className="grid grid-cols-4 items-center gap-4">
-							<p className="text-sm text-gray-500 dark:text-gray-400">
-								Station
-							</p>
+							<p className="text-sm text-gray-500 dark:text-gray-400">Kata</p>
 							<p className="col-span-3 font-medium">{selectedVoter.station}</p>
 						</div>
 						<div className="grid grid-cols-4 items-center gap-4">
-							<p className="text-sm text-gray-500 dark:text-gray-400">Agent</p>
+							<p className="text-sm text-gray-500 dark:text-gray-400">
+								Ni wakala
+							</p>
 							<p className="col-span-3 font-medium">
-								{selectedVoter.isAgent ? "Yes" : "No"}
+								{selectedVoter.isAgent ? "NDIO" : "HAPANA"}
 							</p>
 						</div>
 						<div className="grid grid-cols-4 items-center gap-4">
 							<p className="text-sm text-gray-500 dark:text-gray-400">
-								Referee
+								Amedhamini
 							</p>
 							<p className="col-span-3 font-medium">
-								{selectedVoter.isReferee ? "Yes" : "No"}
+								{selectedVoter.isReferee ? "NDIO" : "HAPANA"}
 							</p>
 						</div>
 					</div>
@@ -113,7 +115,7 @@ export const VoterDetailsDialog = () => {
 								onCheckedChange={() => handleMark("sponsor")}
 								className={`h-5 w-5 rounded-sm transition-colors duration-200 ease-in-out ${sponsorColorClasses}`}
 							/>
-							<Label htmlFor="sponsor">As Sponsor</Label>
+							<Label htmlFor="sponsor">Amedhamini</Label>
 						</div>
 						<div className="flex items-center gap-3">
 							<Checkbox
@@ -122,7 +124,7 @@ export const VoterDetailsDialog = () => {
 								onCheckedChange={() => handleMark("agent")}
 								className={`h-5 w-5 rounded-sm transition-colors duration-200 ease-in-out ${presenterColorClasses}`}
 							/>
-							<Label htmlFor="agent">As agent</Label>
+							<Label htmlFor="agent">Ni wakala</Label>
 						</div>
 					</div>
 				)}

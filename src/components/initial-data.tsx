@@ -1,5 +1,5 @@
 import Papa from "papaparse";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useStoreData } from "@/hooks/use-store-data";
 import { Button } from "./ui/button";
@@ -7,6 +7,7 @@ import { SliderInput } from "@/components/slider-input";
 import { generateData, transformData } from "@/utils/generate-data";
 import { Loader2Icon } from "lucide-react"; // Import a loading icon
 import { toast } from "sonner";
+import { useVerificationModal } from "@/hooks/use-verification";
 
 export const InitialData = () => {
 	// Get the state setter from the Zustand store
@@ -15,7 +16,15 @@ export const InitialData = () => {
 	const [amount, setAmount] = useState<number[]>([500]);
 	// New state to manage the loading status
 	const [isGenerating, setIsGenerating] = useState(false);
+	const isOpen = useVerificationModal((state) => state.isOpen);
+	const onClose = useVerificationModal((state) => state.onClose);
 
+	useEffect(() => {
+		if (isOpen) {
+			onClose();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 	// Handle file upload and parsing
 	const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];

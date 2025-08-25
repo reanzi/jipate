@@ -187,17 +187,18 @@ const App: React.FC = () => {
 				</header>
 
 				{authId && (
-					<div className="flex-1 w-full  xpt-[180px] max-w-4xl mx-auto p-1 ">
+					<div className="flex-1 w-full   max-w-4xl mx-auto sm:p-1 ">
 						{appState && appState.data.length > 0 ? (
 							<>
 								<AnimatePresence>
 									<List voters={filteredVoters} />
 								</AnimatePresence>
 								{filteredVoters.length > 0 && (
-									<div className="text-start  pl-3 py-1.5 text-sm dark:text-neutral-50 text-neutral-800 font-mono dark:bg-blue-600 bg-neutral-200 rounded-b-lg">
-										Found{" "}
-										{new Intl.NumberFormat().format(filteredVoters.length)}{" "}
-										records
+									<div className="text-center py-1.5 text-sm dark:text-neutral-50 text-white font-mono dark:bg-blue-600 bg-blue-600 rounded-b-lg">
+										Taarifa zilizopatikanan{" "}
+										<span className="font-extrabold sm:ml-2">
+											{new Intl.NumberFormat().format(filteredVoters.length)}{" "}
+										</span>
 									</div>
 								)}
 							</>

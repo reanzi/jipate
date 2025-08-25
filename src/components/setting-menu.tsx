@@ -21,8 +21,8 @@ import {
 export function SettingMenu() {
 	const { resetStore } = useStoreData();
 	const [ConfirmDialog, confirm] = useConfirm(
-		"Reset application data?",
-		"This will delete all data used by the application, you will lose all your even your edits. This can not be undone. Are sure?",
+		"Anza upya?",
+		"Hii itafuta data yote inayotumiwa na programu hii, utapoteza hata uhariri wako wote. Hili haliwezi kutenduliwa. Una uhakika?",
 	);
 
 	const handleGenerateTestData = () => {};
