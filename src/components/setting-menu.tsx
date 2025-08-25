@@ -11,14 +11,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useConfirm } from "@/hooks/use-confirm";
 import { useStoreData } from "@/hooks/use-store-data";
+import { useAuthActions } from "@convex-dev/auth/react";
 import {
 	CogIcon,
+	LogOutIcon,
 	ReceiptTextIcon,
 	SendHorizonalIcon,
 	Trash2Icon,
 } from "lucide-react";
 
 export function SettingMenu() {
+	const { signOut } = useAuthActions();
 	const { resetStore } = useStoreData();
 	const [ConfirmDialog, confirm] = useConfirm(
 		"Anza upya?",
@@ -34,6 +37,17 @@ export function SettingMenu() {
 		}
 		// TODO:: Handle reset
 		resetStore();
+	};
+
+	const handleLogout = async () => {
+		const ok = await confirm();
+		if (!ok) {
+			return;
+		}
+		// TODO:: Handle reset
+
+		resetStore();
+		await signOut();
 	};
 	return (
 		<>
@@ -60,6 +74,11 @@ export function SettingMenu() {
 							<DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
 						</DropdownMenuItem>
 					</DropdownMenuGroup>
+					<DropdownMenuSeparator />
+					<DropdownMenuItem onClick={handleLogout} className="font-bold">
+						<LogOutIcon />
+						Logout
+					</DropdownMenuItem>
 					<DropdownMenuSeparator />
 					<DropdownMenuItem
 						variant="destructive"

@@ -3,7 +3,7 @@ import type { AppState, Voter } from '@/types';
 
 // Define the database name and version
 const DB_NAME = 'jipateDb';
-const DB_VERSION = 4;
+const DB_VERSION = 5;
 
 // Define the object store name
 const STORE_NAME = 'app-store';

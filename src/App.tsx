@@ -80,9 +80,6 @@ const App: React.FC = () => {
 			}
 		}
 	}, [isInitializing, authId, onOTPOpen, isOpen]);
-	// useEffect(() => {
-	// 	restore();
-	// }, [restore]);
 
 	useEffect(() => {
 		if (typeof document !== "undefined") {
