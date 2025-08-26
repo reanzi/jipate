@@ -192,7 +192,7 @@ const App: React.FC = () => {
 								</AnimatePresence>
 								{filteredVoters.length > 0 && (
 									<div className="text-center py-1.5 text-sm dark:text-neutral-50 text-white font-mono dark:bg-blue-600 bg-blue-600 rounded-b-lg">
-										Taarifa zilizopatikanan{" "}
+										Taarifa zilizopatikana{" "}
 										<span className="font-extrabold sm:ml-2">
 											{new Intl.NumberFormat().format(filteredVoters.length)}{" "}
 										</span>

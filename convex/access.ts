@@ -47,7 +47,10 @@ import { internalMutation, mutation } from "./_generated/server";
 
 // Function to generate a random access code
 export function generateAccessCode(): string {
-    return Math.random().toString(36).substring(2, 8).toUpperCase();
+    // return Math.random().toString(36).substring(2, 8).toUpperCase();
+    // Generate random number between 0 and 999999, then pad with zeros
+    const randomNum = Math.floor(Math.random() * 1000000);
+    return randomNum.toString().padStart(6, '0');
 }
 
 export const initializeSystem = internalMutation({

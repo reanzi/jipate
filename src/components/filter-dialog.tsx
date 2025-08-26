@@ -82,10 +82,10 @@ export const FilterDialog = () => {
 			<DialogContent>
 				<DialogHeader className="border-b pb-3 mb-4">
 					<DialogTitle className="cursor-default select-none font-extrabold">
-						Filter
+						Chuja
 					</DialogTitle>
 					<DialogDescription className="text-sm text-muted-foreground cursor-default select-none">
-						Better view voters you need, based on your ward.
+						Angalia wapiga kurawa kata unayoihitaji.
 					</DialogDescription>
 				</DialogHeader>
 				<div className="w-full flex flex-row items-center rounded-lg border-none p-3 shadow-sm">

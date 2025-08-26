@@ -82,19 +82,31 @@ const SearchBar: React.FC<SearchBarProps> = ({
 			return [];
 		}
 		const upperCaseInputValue = deferredInputValue.toUpperCase().trim();
+		// Split the input into individual search terms (words)
+		const searchTerms = upperCaseInputValue
+			.split(/\s+/)
+			.filter((term) => term.length > 0);
+
 		return voters
 			.filter((voter) => {
-				// const name = voter.firstName || voter.middleName || voter.surname || "";
-				const name = `${voter.firstName} ${voter.middleName} ${voter.surname}`;
-				const cardNumber = voter.cardNumber || "";
-				const station = voter.station || "";
-				return (
-					name.includes(upperCaseInputValue) ||
+				const name =
+					`${voter.firstName} ${voter.middleName} ${voter.surname}`.toUpperCase();
+				const cardNumber = (voter.cardNumber || "").toUpperCase();
+				const station = (voter.station || "").toUpperCase();
+
+				// Check if ALL search terms are present in the full name string, regardless of their order.
+				// This allows for flexible searches like "raymond nziku" or "nziku raymond".
+				const nameMatches = searchTerms.every((term) => name.includes(term));
+
+				// Check if the full input value matches the card number or station.
+				const cardOrStationMatches =
 					cardNumber.includes(upperCaseInputValue) ||
-					station.includes(upperCaseInputValue)
-				);
+					station.includes(upperCaseInputValue);
+
+				// A voter is a match if their name matches all search terms OR their card/station matches the full input.
+				return nameMatches || cardOrStationMatches;
 			})
-			.slice(0, 10); // Limit suggestions to the top 5
+			.slice(0, 10); // Limit suggestions to the top 10
 	}, [deferredInputValue, voters]);
 
 	useEffect(() => {
@@ -117,7 +129,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
 	const handleSelectSuggestion = (voter: Voter) => {
 		// Set the input value to the selected suggestion's name
 		const name = `${voter.firstName} ${voter.middleName} ${voter.surname}`;
-		console.log("Selected => ", JSON.stringify(voter, null, 2));
+		// console.log("Selected => ", JSON.stringify(voter, null, 2));
 		setInputValue(name);
 		// Update the parent's state to filter the main list
 		onSelectSuggestion(name);
@@ -207,7 +219,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
 									variants={suggestionItemVariants}
 									className="p-4 text-center text-gray-500 dark:text-gray-400"
 								>
-									No matching voters found.
+									Hakuna mpiga kura anaelingania
 								</motion.li>
 							)}
 						</motion.ul>

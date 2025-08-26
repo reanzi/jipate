@@ -65,22 +65,23 @@ export function TwoColumnSearchableInput({
 					className="relative w-full flex justify-start items-center z-20"
 				>
 					<span className="text-muted-foreground text-sm tracking-tight">
-						Center:
+						Chaguo:
 					</span>
 					{value.toUpperCase()
 						? options.find((option) => option.value === value.toUpperCase())
 								?.label
-						: "All centers"}
+						: "Kata zote"}
 					{value ? (
 						<span
-							className="absolute right-0.5 h-7 ml-0 z-30 p-[5px] bg-destructive rounded-sm text-white"
+							className="absolute right-0.5 h-7 ml-0 w-12 z-30 px-2 py-[5px] bg-destructive rounded-sm text-white"
 							onClick={(e) => {
 								// Stop the click event from propagating up to the parent PopoverTrigger
 								e.stopPropagation();
 								onSelect("");
+								setOpen((prev) => !prev);
 							}}
 						>
-							Reset{" "}
+							Futa
 						</span>
 					) : (
 						<ChevronsUpDownIcon className="ml-auto h-4 w-4 shrink-0 opacity-50" />
@@ -89,9 +90,9 @@ export function TwoColumnSearchableInput({
 			</PopoverTrigger>
 			<PopoverContent className="-ml-[20%] w-[140%] p-0">
 				<Command>
-					<CommandInput placeholder="Search center..." className="" />
+					<CommandInput placeholder="Tafuta kata..." className="" />
 					<CommandList>
-						<CommandEmpty>No option found.</CommandEmpty>
+						<CommandEmpty>Hakuna kata iliyopatikana</CommandEmpty>
 						<CommandGroup>
 							<div className="w-[100%] grid grid-cols-2 gap-1.5">
 								{options.map((option) => (

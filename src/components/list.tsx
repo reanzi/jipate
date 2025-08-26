@@ -175,7 +175,7 @@ const List = React.memo(({ voters }: VoterListProps) => {
                             Image
                         </th> */}
 						<th scope="col" className="py-3 px-6 w-1/2 sm:w-[33%]">
-							juna kamili
+							jina kamili
 						</th>
 						<th scope="col" className="py-3 px-6 w-1/2 sm:w-[25%]">
 							kadi ya kura
