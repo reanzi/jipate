@@ -9,18 +9,11 @@
 const sw = self;
 
 // A unique name for the cache
-const CACHE_NAME = "pwa-app-cache-v10"; // Renamed to ensure the new version is installed
-// The list of files to cache during installation
-const urlsToCache = [
-	"/",
-	"/index.html",
-	"/manifest.json",
-	// Add your main CSS and JS bundle paths here.
-	// In a real app, these would be generated with unique hashes (e.g., /static/css/main.abcdef.css).
-	// For this example, we assume a simple path structure.
-	"/static/css/main.css",
-	"/static/js/bundle.js",
-];
+const CACHE_NAME = "pwa-app-cache-v11"; // Increment to force a new cache version
+
+// The list of critical files to pre-cache during installation.
+// We've simplified this to just the main entry points.
+const urlsToCache = ["/", "/index.html", "/manifest.json"];
 
 // The 'install' event is fired when the service worker is installed.
 /**
@@ -86,31 +79,32 @@ sw.addEventListener("fetch", (event) => {
 			console.log("Service Worker: Serving from network", event.request.url);
 			return fetch(event.request)
 				.then((networkResponse) => {
-					// We can optionally add new, dynamic requests to the cache.
-					// This is useful for new images, data, etc.
-					// It's important to clone the response as it can only be consumed once.
+					// Check for valid response before caching
+					if (
+						!networkResponse ||
+						networkResponse.status !== 200 ||
+						networkResponse.type !== "basic"
+					) {
+						return networkResponse;
+					}
+
+					// Clone the response so we can use it and put it in cache
 					const responseToCache = networkResponse.clone();
 
-					// Only cache successful GET requests to avoid the error.
-					if (event.request.method === "GET" && networkResponse.ok) {
-						caches.open(CACHE_NAME).then((cache) => {
-							cache.put(event.request, responseToCache);
-						});
-					}
+					// Open the cache and add the new network response
+					caches.open(CACHE_NAME).then((cache) => {
+						cache.put(event.request, responseToCache);
+					});
 
 					return networkResponse;
 				})
 				.catch(() => {
-					// 3. Offline Fallback: This is the crucial part for offline support.
-					// If both cache and network fail, we must return a valid Response object.
-					// We will try to fall back to the cached index.html for any navigation request.
+					// 3. Offline Fallback: If both cache and network fail, we must return a valid Response object.
 					if (event.request.mode === "navigate") {
 						return caches.match("/index.html").then((offlineResponse) => {
 							if (offlineResponse) {
 								return offlineResponse;
 							} else {
-								// If for some reason index.html is not in the cache,
-								// fall back to a generic offline message.
 								return new Response(
 									"<h1>Offline</h1><p>The application is not available offline.</p>",
 									{
@@ -121,6 +115,12 @@ sw.addEventListener("fetch", (event) => {
 							}
 						});
 					}
+
+					// For non-navigation requests, we return a simple HTML page with a service unavailable message.
+					console.error(
+						"Service Worker: Fetch failed, and no cache match found for:",
+						event.request.url,
+					);
 					return new Response(
 						"<h1>Service Unavailable</h1><p>Please check your internet connection and try again.</p>",
 						{
