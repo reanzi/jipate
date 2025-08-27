@@ -1,17 +1,19 @@
 // src/App.tsx
 import { AnimatePresence } from "framer-motion";
 import React, { useDeferredValue, useEffect, useMemo, useState } from "react";
-import List from "./components/list";
-import SearchBar from "./components/search-bar";
-import { SettingMenu } from "./components/setting-menu";
-import { ThemeToggle } from "./components/theme-toggle";
+// All of these imports are local files and the compiler could not resolve them
+// The fix is to provide the full file extension so the compiler can locate them.
+import List from "./components/list.tsx";
+import SearchBar from "./components/search-bar.tsx";
+import { SettingMenu } from "./components/setting-menu.tsx";
+import { ThemeToggle } from "./components/theme-toggle.tsx";
 // import { useSetupModal } from "./features/setup/state/use-setup-modal";
-import { MarkdownDialog } from "./components/about-dialog";
-import { LoadingUI } from "./components/loading-ui";
-import { useInitializeData, useStoreData } from "./hooks/use-store-data"; // Updated import
-import { capitalizeFirstLetter } from "./lib/utils";
-import { ModalsProvider } from "./providers/modals";
-import { ThemeProvider } from "./providers/theme";
+import { MarkdownDialog } from "./components/about-dialog.tsx";
+import { LoadingUI } from "./components/loading-ui.tsx";
+import { useInitializeData, useStoreData } from "./hooks/use-store-data.ts"; // Updated import
+import { capitalizeFirstLetter } from "./lib/utils.ts";
+import { ModalsProvider } from "./providers/modals.tsx";
+import { ThemeProvider } from "./providers/theme.tsx";
 
 // This is how you import a raw text file in most modern build systems like Vite.
 // The ?raw suffix tells the bundler to load the file content as a string.
@@ -19,11 +21,11 @@ import { ThemeProvider } from "./providers/theme";
 import { SlidersIcon } from "lucide-react";
 import { Toaster } from "sonner";
 import readmeContent from "../README.md?raw";
-import { InitialData } from "./components/initial-data";
-import { useFilterModal } from "./features/setup/state/use-filter-modal";
-import { useUrlState } from "./hooks/use-url-state";
-import { useVerificationModal } from "./hooks/use-verification";
-import type { Voter } from "./types";
+import { InitialData } from "./components/initial-data.tsx";
+import { useFilterModal } from "./features/setup/state/use-filter-modal.ts";
+import { useUrlState } from "./hooks/use-url-state.ts";
+import type { Voter } from "./types/index.ts";
+import { useVerificationModal } from "./hooks/use-verification.tsx";
 
 const App: React.FC = () => {
 	// Destructure the new state and setter functions
@@ -32,7 +34,8 @@ const App: React.FC = () => {
 	const appState = useStoreData((state) => state.appState);
 	const isDataLoaded = useStoreData((state) => state.isDataLoaded);
 	const onOpen = useFilterModal((state) => state.onOpen);
-	const [{ centers: center }] = useUrlState();
+	// Destructure the URL state, including the new 'agents' and 'referees' fields
+	const [{ centers: center, agents, referees }] = useUrlState();
 
 	const onOTPOpen = useVerificationModal((state) => state.onOpen);
 	const isOpen = useVerificationModal((state) => state.isOpen);
@@ -95,24 +98,37 @@ const App: React.FC = () => {
 	}, [theme]);
 	// Memoize the filtered voters list. This is a CPU-intensive operation.
 	const filteredVoters = useMemo(() => {
-		// If the deferredSearchTerm is empty, return the full list of voters
-		if (!deferredSearchTerm.trim()) {
-			return voters;
+		// Start with the base list of voters
+		let filtered = voters;
+
+		// First, apply the isAgent and isReferee filters for efficiency
+		// The URL state values are strings, so we check for 'true'
+		if (agents === "true" && referees === "true") {
+			filtered = filtered.filter((voter) => voter.isAgent || voter.isReferee);
+		} else if (referees === "true") {
+			filtered = filtered.filter((voter) => voter.isReferee);
+		} else if (agents === "true") {
+			filtered = filtered.filter((voter) => voter.isAgent);
 		}
 
-		const upperCaseInputValue = deferredSearchTerm.toUpperCase().trim();
-		// Filter the list based on the deferred search term
-		return voters.filter((voter) => {
-			const name = `${voter.firstName} ${voter.middleName} ${voter.surname}`;
-			const cardNumber = voter.cardNumber || "";
-			const station = voter.station || "";
-			return (
-				name.includes(upperCaseInputValue) ||
-				cardNumber.includes(upperCaseInputValue) ||
-				station.includes(upperCaseInputValue)
-			);
-		});
-	}, [deferredSearchTerm, voters]);
+		// Then, apply the search term filter
+		if (deferredSearchTerm.trim()) {
+			const upperCaseInputValue = deferredSearchTerm.toUpperCase().trim();
+			// Filter the list based on the deferred search term
+			filtered = filtered.filter((voter) => {
+				const name = `${voter.firstName} ${voter.middleName} ${voter.surname}`;
+				const cardNumber = voter.cardNumber || "";
+				const station = voter.station || "";
+				return (
+					name.includes(upperCaseInputValue) ||
+					cardNumber.includes(upperCaseInputValue) ||
+					station.includes(upperCaseInputValue)
+				);
+			});
+		}
+
+		return filtered;
+	}, [deferredSearchTerm, voters, agents, referees]);
 
 	if (isInitializing) {
 		return <LoadingUI />;
