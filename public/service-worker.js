@@ -9,7 +9,7 @@
 const sw = self;
 
 // A unique name for the cache
-const CACHE_NAME = "pwa-app-cache-v12"; // Increment to force a new cache version
+const CACHE_NAME = "pwa-app-cache-v13"; // Increment to force a new cache version
 
 // The list of critical files to pre-cache during installation.
 // We've simplified this to just the main entry points.
