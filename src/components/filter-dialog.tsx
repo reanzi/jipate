@@ -17,6 +17,8 @@ import { useUrlState } from "@/hooks/use-url-state";
 import type { Voter } from "@/types";
 import { useMemo } from "react";
 import { TwoColumnSearchableInput } from "./two-column-searchable-input";
+import { Checkbox } from "./ui/checkbox";
+import { Label } from "./ui/label";
 
 // const FormSchema = z.object({
 //   // code: z.number({required_error: "Please enter the code"}),
@@ -88,6 +90,26 @@ export const FilterDialog = () => {
 						Angalia wapiga kurawa kata unayoihitaji.
 					</DialogDescription>
 				</DialogHeader>
+				<div className="py-4 px-4 flex justify-around items-center w-full  border-t border-muted-foreground">
+					<div className="flex items-center gap-3">
+						<Checkbox
+							id="isSponsor"
+							checked={true}
+							onCheckedChange={() => {}}
+							className={`h-5 w-5 rounded-sm transition-colors duration-200 ease-in-out`}
+						/>
+						<Label htmlFor="isSponsor">Amedhamini</Label>
+					</div>
+					<div className="flex items-center gap-3">
+						<Checkbox
+							id="isAgent"
+							checked={true}
+							onCheckedChange={() => {}}
+							className={`h-5 w-5 rounded-sm transitiosn-colors duration-200 ease-in-out`}
+						/>
+						<Label htmlFor="isAgent">Ni wakala</Label>
+					</div>
+				</div>
 				<div className="w-full flex flex-row items-center rounded-lg border-none p-3 shadow-sm">
 					<TwoColumnSearchableInput
 						onSelect={handleOnSelect}
